@@ -40,7 +40,15 @@ const PageLink: React.FC<IPageLink> = ({
 	return (
 		<Link
 			to={link}
-			className="flex justify-between items-center p-4 hover:bg-[var(--primary)]/10 rounded-2xl transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-[var(--primary)]/80 active:bg-[var(--primary)]/60"
+			className=" justify-between p-4 hover:bg-[var(--primary)]/10  z-10 text-[var(--primary)] flex items-center gap-3 py-4 px-2 rounded-2xl focus:outline-2  shadow-xs
+transition-[color,box-shadow]
+disabled:pointer-events-none disabled:cursor-not-allowed
+disabled:opacity-50 focus-visible:border-ring
+focus-visible:ring-ring/50
+focus-visible:ring-[3px]
+aria-invalid:ring-destructive/20
+dark:aria-invalid:ring-destructive/40
+aria-invalid:border-destructive"
 			aria-label={ariaLabel || `${title} page`}
 			role="navigation"
 		>
@@ -94,7 +102,6 @@ const CreateShipment = () => {
 	return (
 		<button
 			className="group
-    focus:outline-2 focus:outline-offset-2 focus:outline-[var(--primary)]/80 
     px-8 py-4 rounded-2xl bg-[var(--primary)] 
     cursor-pointer text-[var(--primary-foreground)] 
     text-lg font-medium tracking-wide flex items-center justify-center 
@@ -125,7 +132,15 @@ const Aside = () => {
 				to="/"
 				role="navigation"
 				aria-label="Main Page"
-				className="z-10 text-[var(--primary)] flex items-center gap-3 py-4 px-2 rounded-2xl transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-[var(--primary)]/80 active:bg-[var(--primary)]/60"
+				className="z-10 text-[var(--primary)] flex items-center gap-3 py-4 px-2 rounded-2xl focus:outline-2  shadow-xs
+transition-[color,box-shadow]
+disabled:pointer-events-none disabled:cursor-not-allowed
+disabled:opacity-50 focus-visible:border-ring
+focus-visible:ring-ring/50
+focus-visible:ring-[3px]
+aria-invalid:ring-destructive/20
+dark:aria-invalid:ring-destructive/40
+aria-invalid:border-destructive"
 			>
 				<GiConcentrationOrb size={32} className="shrink-0" />
 				<div className="flex flex-col">
@@ -172,7 +187,7 @@ const Aside = () => {
 			<div className="text-sm text-[var(--muted-foreground)] py-4 flex items-center justify-between">
 				© {new Date().getFullYear()} Hellpes
 				<button
-					className="cursor-pointer p-2 rounded-2xl hover:bg-[var(--primary)]/10 transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-[var(--primary)]/80 active:bg-[var(--primary)]/60"
+					className="cursor-pointer p-2 rounded-2xl border-1 border-[var(--primary)] hover:bg-[var(--primary)]/10 transition-colors focus:outline-1  "
 					aria-label="Toggle theme"
 					onClick={() => dispatch(setTheme())}
 				>
