@@ -1,6 +1,5 @@
 import React, { ReactNode } from "react";
-import Aside from "./Aside";
-import Layout from "./Layout";
+import { Aside, Layout, PageHeader } from ".";
 
 interface IPageLayout {
 	children: ReactNode;
@@ -10,7 +9,8 @@ const PageLayout: React.FC<IPageLayout> = ({ children }) => {
 	return (
 		<div className="flex h-[100dvh] w-full">
 			<Aside />
-			<Layout size={"large"} className="w-full">
+			<Layout size={"large"} className="w-full flex flex-col gap-6">
+				<PageHeader />
 				{children}
 			</Layout>
 		</div>
