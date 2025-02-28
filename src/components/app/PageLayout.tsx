@@ -1,13 +1,23 @@
 import React, { ReactNode } from "react";
 import { Aside, Layout, PageHeader } from ".";
+import { useSelector } from "react-redux";
+import { RootState } from "./store/store";
+import { cn } from "@/lib/utils";
 
 interface IPageLayout {
 	children: ReactNode;
 }
 
-const PageLayout: React.FC<IPageLayout> = ({ children }) => {
+export const PageLayout: React.FC<IPageLayout> = ({ children }) => {
+	const themeState = useSelector((state: RootState) => state.theme.theme);
+	console.log(themeState);
 	return (
-		<div className="flex h-[100dvh] w-full">
+		<div
+			className={cn(
+				"flex h-[100dvh] w-full",
+				themeState === "light" ? "" : "dark"
+			)}
+		>
 			<Aside />
 			<Layout size={"large"} className="w-full flex flex-col gap-6">
 				<PageHeader />
@@ -16,5 +26,3 @@ const PageLayout: React.FC<IPageLayout> = ({ children }) => {
 		</div>
 	);
 };
-
-export default PageLayout;

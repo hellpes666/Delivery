@@ -1,13 +1,14 @@
 import { JSX } from "react";
-import {
-	Main,
-	Requests,
-	Notifications,
-	Dashboard,
-	Parcels,
-	Branches,
-	Clients,
-} from "./pages";
+import React from "react";
+
+const Main = React.lazy(() => import("./pages/Main"));
+const Requests = React.lazy(() => import("./pages/Requests"));
+const Notifications = React.lazy(() => import("./pages/Notifications"));
+const Dashboard = React.lazy(() => import("./pages/Dashboard"));
+const Parcels = React.lazy(() => import("./pages/Parcels"));
+const Branches = React.lazy(() => import("./pages/Branches"));
+const Clients = React.lazy(() => import("./pages/Clients"));
+
 interface RouteConfig {
 	path: string;
 	element: JSX.Element;
@@ -48,36 +49,5 @@ export const ROUTES_2: RouteConfig[] = [
 		path: "/clients",
 		element: <Clients />,
 		title: "Clients",
-	},
-];
-
-export const ROUTES = [
-	{
-		path: "/",
-		element: <Main />,
-	},
-	{
-		path: "/requests",
-		element: <Requests />,
-	},
-	{
-		path: "/notifications",
-		element: <Notifications />,
-	},
-	{
-		path: "/dashboard",
-		element: <Dashboard />,
-	},
-	{
-		path: "/parcels",
-		element: <Parcels />,
-	},
-	{
-		path: "/branches",
-		element: <Branches />,
-	},
-	{
-		path: "/clients",
-		element: <Clients />,
 	},
 ];

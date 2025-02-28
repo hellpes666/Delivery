@@ -1,4 +1,4 @@
-import PageLayout from "../PageLayout";
+import { PageLayout } from "..";
 
 function Main() {
 	return (

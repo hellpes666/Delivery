@@ -8,10 +8,20 @@ import {
 	IoMdNotificationsOutline,
 } from "react-icons/io";
 import { LuLayoutDashboard } from "react-icons/lu";
-import { CiDeliveryTruck, CiBoxes, CiFlag1, CiUser } from "react-icons/ci";
+import {
+	CiDeliveryTruck,
+	CiBoxes,
+	CiFlag1,
+	CiUser,
+	CiLight,
+	CiDark,
+} from "react-icons/ci";
 import { FaPlus } from "react-icons/fa6";
-import { ROUTES_2 } from "./routes";
-import { TbArrowWaveRightUp } from "react-icons/tb";
+import { ROUTES_2 } from "./routes-2";
+import { useDispatch, useSelector } from "react-redux";
+import { setTheme } from "./store/slices/themeSlice";
+import { RootState } from "./store/store";
+
 interface IPageLink {
 	icon: ReactNode;
 	title: string;
@@ -36,13 +46,11 @@ const PageLink: React.FC<IPageLink> = ({
 		>
 			<div className="flex items-center gap-3">
 				<span className="text-xl text-[var(--primary)]">{icon}</span>
-				<h2 className="text-[var(--primary-foreground)] font-medium">
-					{title}
-				</h2>
+				<h2 className="text-[var(--secondary)] font-medium">{title}</h2>
 			</div>
 
 			{notification !== undefined && notification > 0 && (
-				<div className="rounded-2xl font-medium px-3 py-1 bg-[var(--primary-foreground)] text-[var(--primary)] text-sm">
+				<div className="rounded-2xl font-medium px-3 py-1 bg-[var(--secondary)] text-[var(--secondary-foreground)] text-sm">
 					{Math.min(notification, 99)}
 				</div>
 			)}
@@ -103,7 +111,8 @@ const CreateShipment = () => {
 const Aside = () => {
 	const firstPartLinks = ROUTES_2.slice(1, 3);
 	const secondPartLinks = ROUTES_2.slice(3);
-
+	const dispatch = useDispatch();
+	const themeSelector = useSelector((state: RootState) => state.theme.theme);
 	return (
 		<Layout
 			size="large"
@@ -116,7 +125,7 @@ const Aside = () => {
 				to="/"
 				role="navigation"
 				aria-label="Main Page"
-				className="z-10 text-[var(--primary)] flex items-center gap-3 py-4 c px-2 c"
+				className="z-10 text-[var(--primary)] flex items-center gap-3 py-4 px-2 rounded-2xl transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-[var(--primary)]/80 active:bg-[var(--primary)]/60"
 			>
 				<GiConcentrationOrb size={32} className="shrink-0" />
 				<div className="flex flex-col">
@@ -160,8 +169,30 @@ const Aside = () => {
 
 			<CreateShipment />
 			<Separator />
-			<div className="text-sm text-[var(--muted-foreground)] py-4">
+			<div className="text-sm text-[var(--muted-foreground)] py-4 flex items-center justify-between">
 				© {new Date().getFullYear()} Hellpes
+				<button
+					className="cursor-pointer p-2 rounded-2xl hover:bg-[var(--primary)]/10 transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-[var(--primary)]/80 active:bg-[var(--primary)]/60"
+					aria-label="Toggle theme"
+					onClick={() => dispatch(setTheme())}
+				>
+					<div className="flex gap-2 text-xl">
+						<CiLight
+							className={`text-[var(--primary)] ${
+								themeSelector === "light"
+									? "opacity-100"
+									: "opacity-50"
+							}`}
+						/>
+						<CiDark
+							className={`text-[var(--primary)] ${
+								themeSelector === "light"
+									? "opacity-50"
+									: "opacity-100"
+							}`}
+						/>
+					</div>
+				</button>
 			</div>
 		</Layout>
 	);
