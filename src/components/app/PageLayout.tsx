@@ -19,7 +19,10 @@ export const PageLayout: React.FC<IPageLayout> = ({ children }) => {
 			)}
 		>
 			<Aside />
-			<Layout size={"large"} className="w-full flex flex-col gap-6">
+			<Layout
+				size={"large"}
+				className="w-full flex flex-col gap-6 bg-[var(--background)]"
+			>
 				<PageHeader />
 				{children}
 			</Layout>
