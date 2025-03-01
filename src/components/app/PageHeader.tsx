@@ -1,80 +1,59 @@
-import { cn } from "@/lib/utils";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDebounce } from "../shared/hooks/debounced";
+import { Selector } from "../shared/ui";
+import { formatDate } from "../shared/lib/formatDate";
 
-interface ISelector {
-	options: string[];
-	current: string;
-	onChange: (e) => void;
-	label: string;
-	className?: string;
-}
-
-const Selector: React.FC<ISelector> = ({
-	options,
-	current,
-	onChange,
-	label,
-	className,
-}) => {
-	return (
-		<>
-			<label htmlFor="select-city" className="sr-only">
-				{label}:{" "}
-				<span className="font-bold tracking-wide">{current}</span>
-			</label>
-			<select
-				name={`select-${label}`}
-				id={`select-${label}`}
-				value={current}
-				onChange={onChange}
-				className={cn(
-					"file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground flex w- min-w-0 bg-transparent px-3 shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive rounded-2xl text-[var(--foreground)] font-medium border-[var(--foreground)]/80 border-2 w-[180px] ",
-					className
-				)}
-			>
-				{options.map((option) => (
-					<option
-						className="text-primary font-medium tracking-wide "
-						key={option}
-						value={option}
-					>
-						{option}
-					</option>
-				))}
-			</select>
-		</>
-	);
-};
-
-const PageHeader = () => {
-	const [city, setCity] = useState("Barcelona");
-	const [departament, setDepartaments] = useState("1");
-
-	const DEPARTAMENTS = ["1", "2", "3", "4", "5"];
-	const CITIES = ["Barcelona", "Moscow", "New York", "Tokyo"];
-
+const MaskedInput = () => {
 	const [inputValue, setInputValue] = useState("");
 
 	const debouncedValue = useDebounce(inputValue, 500);
 
+	const formatTrackingNumber = (value) => {
+		// Удаляем все небуквенно-цифровые символы
+		const cleaned = value.replace(/[^\w]/g, "");
+
+		// Добавляем дефисы через каждые 4 символа
+		return cleaned.match(/.{1,4}/g)?.join("-") || "";
+	};
+
 	const handleChange = (e) => {
-		setInputValue(e.target.value);
+		const rawValue = e.target.value.replace(/-/g, "");
+		const formatted = formatTrackingNumber(rawValue);
+		setInputValue(formatted);
 	};
 
 	return (
-		<div className="flex gap-4">
-			<label htmlFor="tracking-number" className="sr-only">
-				Search by tracking number
-			</label>
-			<input
-				onChange={handleChange}
-				value={inputValue}
-				id="tracking-number"
-				data-slot="input"
-				placeholder="Search by tracking number"
-				className="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary flex h-9 w-full min-w-0 bg-transparent px-3 shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive rounded-2xl text-[var(--foreground)] font-medium border-[var(--foreground)]/80 border-2 !py-6 text-sm md:text-base lg:text-lg xl:text-xl"
-			/>
+		<input
+			value={inputValue}
+			onChange={handleChange}
+			maxLength={19}
+			placeholder="XXXX-XXXX-XXXX-XXXX, tracking number"
+			id="tracking-number"
+			data-slot="input"
+			className="flex h-full w-fit rounded-2xl border border-input bg-transparent px-3 py-1 shadow-sm transition-colors file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 md:text-sm text-foreground font-medium text-xl"
+		/>
+	);
+};
+
+const PageHeader = () => {
+	const [city, setCity] = useState("Moscow");
+	const [departament, setDepartaments] = useState("1");
+
+	const DEPARTAMENTS = ["1", "2", "3", "4", "5"];
+	const CITIES = ["Moscow", "Barcelona", "New York", "Tokyo"];
+
+	const [currentDate, setCurrentDate] = useState(new Date());
+
+	useEffect(() => {
+		const timer = setInterval(() => {
+			setCurrentDate(new Date());
+		}, 60000);
+		return () => clearInterval(timer);
+	}, []);
+
+	return (
+		<div className="flex flex-col md:flex-row gap-4">
+			<MaskedInput />
 
 			<Selector
 				options={CITIES}
@@ -86,9 +65,19 @@ const PageHeader = () => {
 				options={DEPARTAMENTS}
 				current={departament}
 				onChange={(e) => setDepartaments(e.target.value)}
-				label="Deparrtament"
-				className="w-[90px]"
+				label="Departament"
 			/>
+
+			<div className="rounded-2xl border border-input bg-transparent px-3 py-1 shadow-sm w-fit text-nowrap hover:border-ring font-bold text-[10px] flex items-center justify-center">
+				{formatDate(currentDate, {
+					weekday: "short",
+					day: "2-digit",
+					month: "short",
+					hour: "2-digit",
+					minute: "2-digit",
+					hour12: false,
+				})}
+			</div>
 		</div>
 	);
 };

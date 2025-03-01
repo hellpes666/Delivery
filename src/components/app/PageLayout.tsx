@@ -7,21 +7,22 @@ import { cn } from "@/lib/utils";
 interface IPageLayout {
 	children: ReactNode;
 }
-
 export const PageLayout: React.FC<IPageLayout> = ({ children }) => {
 	const themeState = useSelector((state: RootState) => state.theme.theme);
+
 	console.log(themeState);
 	return (
 		<div
 			className={cn(
-				"flex h-[100dvh] w-full",
+				"flex h-full w-full justify-between",
 				themeState === "light" ? "" : "dark"
 			)}
 		>
 			<Aside />
+
 			<Layout
-				size={"large"}
-				className="w-full flex flex-col gap-6 bg-[var(--background)]"
+				size={"medium"}
+				className="w-full flex flex-col gap-6 bg-background h-full  "
 			>
 				<PageHeader />
 				{children}

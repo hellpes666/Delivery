@@ -6,26 +6,20 @@ interface ILayout {
 	children: React.ReactNode;
 	className?: string;
 }
+const SIZE_MAP = {
+	small: "px-8 py-2",
+	medium: "px-16 py-4",
+	large: "px-24 py-6",
+};
 
-const Layout: React.FC<ILayout> = ({
+const  Layout: React.FC<ILayout> = ({
 	size = "medium",
 	children,
 	className,
-}) => {
-	const currentPadding =
-		size === "small"
-			? "px-8 py-2"
-			: size === "medium"
-			? "px-16 py-4"
-			: "px-24 py-6";
-
-	return (
-		<div
-			className={cn("bg-[var(--background)]", currentPadding, className)}
-		>
-			{children}
-		</div>
-	);
-};
+}) => (
+	<div className={cn("bg-background", SIZE_MAP[size], className)}>
+		{children}
+	</div>
+);
 
 export default Layout;

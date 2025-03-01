@@ -4,6 +4,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+	height: 100vh;
+}
+
 * {
 	box-sizing: border-box;
 	transition: all 0.5s;

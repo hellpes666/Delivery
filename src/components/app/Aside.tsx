@@ -21,7 +21,6 @@ import { ROUTES_2 } from "./routes-2";
 import { useDispatch, useSelector } from "react-redux";
 import { setTheme } from "./store/slices/themeSlice";
 import { RootState } from "./store/store";
-
 interface IPageLink {
 	icon: ReactNode;
 	title: string;
@@ -54,7 +53,9 @@ aria-invalid:border-destructive"
 		>
 			<div className="flex items-center gap-3">
 				<span className="text-xl text-[var(--primary)]">{icon}</span>
-				<h2 className="text-[var(--secondary)] font-medium">{title}</h2>
+				<h2 className="text-[var(--secondary)] font-medium ">
+					{title}
+				</h2>
 			</div>
 
 			{notification !== undefined && notification > 0 && (
@@ -115,17 +116,21 @@ const CreateShipment = () => {
 	);
 };
 
-const Aside = () => {
+const Aside: React.FC<{ className?: string }> = ({ className }) => {
 	const firstPartLinks = ROUTES_2.slice(1, 3);
 	const secondPartLinks = ROUTES_2.slice(3);
 	const dispatch = useDispatch();
 	const themeSelector = useSelector((state: RootState) => state.theme.theme);
 	return (
 		<Layout
-			size="large"
+			size="small"
 			className={cn(
-				"bg-[var(--foreground)] flex flex-col h-full",
-				"px-6 w-[30%] md:min-w-[320px]"
+				"bg-[var(--foreground)] flex flex-col",
+				"fixed h-screen w-full md:w-[320px]",
+				"transform transition-transform duration-300 ease-in-out",
+				"z-50",
+				"left-[-100%] md:left-0 md:relative",
+				className
 			)}
 		>
 			<Link
@@ -150,9 +155,7 @@ aria-invalid:border-destructive"
 					</span>
 				</div>
 			</Link>
-
 			<Separator />
-
 			<nav className="flex-1 flex flex-col gap-1">
 				<div className="flex flex-col gap-1">
 					{firstPartLinks.map((link, index) => (
@@ -181,7 +184,6 @@ aria-invalid:border-destructive"
 					))}
 				</div>
 			</nav>
-
 			<CreateShipment />
 			<Separator />
 			<div className="text-sm text-[var(--muted-foreground)] py-4 flex items-center justify-between">
