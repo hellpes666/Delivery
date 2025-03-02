@@ -406,8 +406,8 @@ function Main() {
 	];
 
 	return (
-		<PageLayout>
-			<h1 className="text-primary text-2xl font-medium tracking-wide h-full">
+		<PageLayout className="pb-0" layoutClassName="pb-0">
+			<h1 className="text-primary text-2xl font-medium tracking-wide h-full ">
 				Overview
 			</h1>
 			<div className="space-y-4 h-full">

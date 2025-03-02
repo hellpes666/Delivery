@@ -6,8 +6,14 @@ import { cn } from "@/lib/utils";
 
 interface IPageLayout {
 	children: ReactNode;
+	className?: string;
+	layoutClassName?: string;
 }
-export const PageLayout: React.FC<IPageLayout> = ({ children }) => {
+export const PageLayout: React.FC<IPageLayout> = ({
+	children,
+	className,
+	layoutClassName,
+}) => {
 	const themeState = useSelector((state: RootState) => state.theme.theme);
 
 	console.log(themeState);
@@ -15,14 +21,18 @@ export const PageLayout: React.FC<IPageLayout> = ({ children }) => {
 		<div
 			className={cn(
 				"flex h-full w-full justify-between",
-				themeState === "light" ? "" : "dark"
+				themeState === "light" ? "" : "dark",
+				className
 			)}
 		>
 			<Aside />
 
 			<Layout
 				size={"medium"}
-				className="w-full flex flex-col gap-6 bg-background h-full  "
+				className={cn(
+					"w-full flex flex-col gap-6 bg-background h-full  ",
+					layoutClassName
+				)}
 			>
 				<PageHeader />
 				{children}

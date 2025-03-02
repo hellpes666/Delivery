@@ -126,12 +126,12 @@ const Aside: React.FC<{ className?: string }> = ({ className }) => {
 			size="small"
 			className={cn(
 				"bg-[var(--foreground)] flex flex-col",
-				"fixed h-screen w-full md:w-[320px]",
+				"fixed md:sticky h-screen w-full md:w-[320px]", 
+				"top-0 left-[-100%] md:left-0",
 				"transform transition-transform duration-300 ease-in-out",
 				"z-50",
-				"left-[-100%] md:left-0 md:relative",
 				className
-			)}
+			  )}
 		>
 			<Link
 				to="/"
