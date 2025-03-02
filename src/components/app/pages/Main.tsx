@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import {
 	Table,
 	TableBody,
-	TableCaption,
 	TableCell,
 	TableHead,
 	TableHeader,
@@ -96,6 +95,43 @@ interface IStatisticDelayedDelivery {
 	timeDelay: string[];
 }
 
+const getBadgeClass = (delay: number): string => {
+	const aliasClassName = "py-1 px-2 font-medium rounded-[8px]";
+	if (delay < 1) {
+		return cn("bg-emerald-200 text-emerald-700", aliasClassName);
+	} else if (delay < 3) {
+		return cn("bg-orange-200 text-orange-700", aliasClassName);
+	} else {
+		return cn("bg-red-200 text-red-700", aliasClassName);
+	}
+};
+
+const getColorClass = (value: number): string => {
+	if (value > 75) {
+		return "red-700";
+	} else if (value > 45) {
+		return "orange-700";
+	} else {
+		return "emerald-700";
+	}
+};
+
+interface DefineColorProps {
+	value: string;
+	mode: "badge" | "color";
+}
+
+const DefineColor: React.FC<DefineColorProps> = ({ value, mode }) => {
+	const parsedValue = Number(value.split(" ")[0].split(":")[0]);
+
+	if (mode === "badge") {
+		return <span className={getBadgeClass(parsedValue)}>{value}</span>;
+	} else {
+		const curValue = Number(value);
+		return getColorClass(curValue);
+	}
+};
+
 const StatisticDelayedDelivery: React.FC<IStatisticDelayedDelivery> = ({
 	destination,
 	truck,
@@ -105,53 +141,20 @@ const StatisticDelayedDelivery: React.FC<IStatisticDelayedDelivery> = ({
 	const length = destination.length;
 	const arr = Array.from({ length }, (_, index) => index);
 
-	const TimeDelayedBadge = (time: { time: string }) => {
-		const delay = Number(time.time.split(" ")[0].split(":")[0]);
-		console.log(time, "-", delay);
-		const aliasClassName = "py-1 px-2 font-medium rounded-[8px]";
-		if (delay < 1) {
-			return (
-				<span
-					className={cn(
-						" bg-emerald-200 text-emerald-700 ",
-						aliasClassName
-					)}
-				>
-					{time.time}
-				</span>
-			);
-		} else if (delay < 3) {
-			return (
-				<span
-					className={cn(
-						" bg-orange-200 text-orange-700",
-						aliasClassName
-					)}
-				>
-					{time.time}
-				</span>
-			);
-		} else {
-			return (
-				<span
-					className={cn(" bg-red-200 text-red-700", aliasClassName)}
-				>
-					{time.time}
-				</span>
-			);
-		}
-	};
-
 	return (
 		<Table>
 			<TableHeader>
 				<TableRow>
-					<TableHead className="w-[180px] text-muted">
+					<TableHead className="w-[180px] text-muted font-bold">
 						Destination
 					</TableHead>
-					<TableHead className=" text-muted">Truck</TableHead>
-					<TableHead className=" text-muted">Time Arrive</TableHead>
-					<TableHead className="text-right text-muted">
+					<TableHead className=" text-muted font-bold">
+						Truck
+					</TableHead>
+					<TableHead className=" text-muted font-bold">
+						Time Arrive
+					</TableHead>
+					<TableHead className="text-right text-muted font-bold">
 						Time delay
 					</TableHead>
 				</TableRow>
@@ -185,12 +188,83 @@ const StatisticDelayedDelivery: React.FC<IStatisticDelayedDelivery> = ({
 							key={timeDelay[i]}
 							className="text-right text-input"
 						>
-							{<TimeDelayedBadge time={timeDelay[i]} />}
+							{<DefineColor value={timeDelay[i]} mode="badge" />}
 						</TableCell>
 					</TableRow>
 				))}
 			</TableBody>
 		</Table>
+	);
+};
+
+interface IStatisticAvaibleTrucks
+	extends Pick<IStatisticDelayedDelivery, "truck" | "destination"> {
+	workload: number[]; // percentage
+}
+
+interface ITruckInfo {
+	destination: string;
+	truck: string;
+	workload: number;
+}
+const TruckInfo: React.FC<ITruckInfo> = ({ destination, truck, workload }) => {
+	const mainColor = getColorClass(workload);
+	return (
+		<div className="flex justify-between py-2 pr-3  border-accent/70 border-b-2 ">
+			<div className="flex flex-col items-start">
+				<h3 className="font-bold text-primary text-xl">{truck}</h3>
+				<p className="text-muted-foreground text-[12px]">
+					{destination}
+				</p>
+			</div>
+
+			<div className="flex flex-col items-end gap-2">
+				<h3 className={cn(`text-${mainColor} font-medium`)}>
+					{workload}
+					<span className="text-muted-foreground font-normal">
+						/100 %
+					</span>
+				</h3>
+
+				<div className="flex items-center w-full min-w-[100px]">
+					<div
+						className={cn(
+							`w-[${workload}%]  h-1 rounded-l-2xl`,
+							`bg-${mainColor}`
+						)}
+						style={{ width: `${workload}%` }}
+					/>
+					<div
+						className={`w-[${
+							100 - workload
+						}%] bg-muted-foreground/40 h-1 rounded-r-2xl`}
+						style={{ width: `${100 - workload}%` }}
+					/>
+				</div>
+			</div>
+		</div>
+	);
+};
+
+const StatisticAvaibleTrucks: React.FC<IStatisticAvaibleTrucks> = ({
+	destination,
+	truck,
+	workload,
+}) => {
+	const length = destination.length;
+	const ARR = Array.from({ length }, (_, index) => index);
+
+	return (
+		<div className="overflow-auto">
+			{ARR.map((i) => (
+				<TruckInfo
+					key={destination[i] + "-" + truck[i] + "-" + workload[i]}
+					destination={destination[i]}
+					truck={truck[i]}
+					workload={workload[i]}
+				/>
+			))}
+		</div>
 	);
 };
 
@@ -209,10 +283,55 @@ const StatisticCard: React.FC<IStatisticCard> = ({
 					"Valencia - Barcelona",
 					"Cordoba - Barcelona",
 					"Seville - Barcelona",
+					"Valencia - Barcelona",
+					"Cordoba - Barcelona",
+					"Seville - Barcelona",
 				]}
-				truck={["B435324", "B438987", "B435324"]}
-				timeArrive={["07:05 AM", "10:05 AM", "11:40 AM"]}
-				timeDelay={["05:05 h", "02:05 h", "00:35 h"]}
+				truck={[
+					"B435324",
+					"B438987",
+					"B435324",
+					"B435324",
+					"B438987",
+					"B435324",
+				]}
+				timeArrive={[
+					"07:05 AM",
+					"10:05 AM",
+					"11:40 AM",
+					"07:05 AM",
+					"10:05 AM",
+					"11:40 AM",
+				]}
+				timeDelay={[
+					"05:05 h",
+					"02:05 h",
+					"00:35 h",
+					"05:05 h",
+					"02:05 h",
+					"00:35 h",
+				]}
+			/>
+		),
+		"Availbe trucks": (
+			<StatisticAvaibleTrucks
+				destination={[
+					"Valencia - Barcelona",
+					"Cordoba - Barcelona",
+					"Seville - Barcelona",
+					"Valencia - Barcelona",
+					"Cordoba - Barcelona",
+					"Seville - Barcelona",
+				]}
+				truck={[
+					"B435324",
+					"B438987",
+					"B435324",
+					"B435324",
+					"B438987",
+					"B435324",
+				]}
+				workload={[99, 70, 50, 40, 20, 10]}
 			/>
 		),
 	};
@@ -220,7 +339,7 @@ const StatisticCard: React.FC<IStatisticCard> = ({
 		<Layout
 			size="small"
 			className={cn(
-				"flex flex-col gap-y-4 bg-accent-foreground rounded-2xl px-8 py-10 w-full",
+				"flex flex-col gap-y-4 bg-accent-foreground rounded-2xl px-8 py-10 w-full max-h-[300px]",
 				className
 			)}
 		>
