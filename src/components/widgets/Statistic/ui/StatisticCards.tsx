@@ -140,7 +140,10 @@ const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
 					dateValue={currentPlan.requests.processeed}
 				/>
 			</div>
-			<svg viewBox="0 0 100 50" className="w-full max-w-[60%] mx-auto">
+			<svg
+				viewBox="-15 -15 120 80"
+				className="w-full max-w-[60%] mx-auto"
+			>
 				<path
 					d="M 10,45 A 40 40 0 0 1 90 45"
 					stroke="#e0e0e0"
@@ -149,7 +152,6 @@ const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
 					fill="none"
 				/>
 
-				{/* Активная часть (анимируемая) */}
 				<path
 					d="M 10,45 A 40 40 0 0 1 90 45"
 					stroke={
@@ -164,6 +166,27 @@ const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
 					strokeLinecap="round"
 					strokeDasharray={`${currentPercentage} 100`}
 				/>
+				<text
+					x="18"
+					y="58"
+					textAnchor="end"
+					fontSize="8"
+					fill="#666"
+					className="font-medium"
+				>
+					0%
+				</text>
+
+				<text
+					x="83"
+					y="58"
+					textAnchor="start"
+					fontSize="8"
+					fill="#666"
+					className="font-medium"
+				>
+					100%
+				</text>
 			</svg>
 		</div>
 	);
