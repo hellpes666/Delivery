@@ -140,25 +140,31 @@ const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
 					dateValue={currentPlan.requests.processeed}
 				/>
 			</div>
-			<div
-				className="w-full bg-transparent max-w-[60%] xl:max-w-[40%] h-[50%] rounded-t-full border-12 border-b-0 border-muted-foreground/30 mx-auto relative z-0"
-				style={{
-					borderColor:
+			<svg viewBox="0 0 100 50" className="w-full max-w-[60%] mx-auto">
+				<path
+					d="M 10,45 A 40 40 0 0 1 90 45"
+					stroke="#e0e0e0"
+					strokeWidth="8"
+					strokeLinecap="round"
+					fill="none"
+				/>
+
+				{/* Активная часть (анимируемая) */}
+				<path
+					d="M 10,45 A 40 40 0 0 1 90 45"
+					stroke={
 						mainColor === "red-700"
 							? "#00A550"
 							: mainColor === "orange-700"
 							? "#F3A505"
-							: "#ff1d4b",
-				}}
-			>
-				<h4 className="font-medium text-muted-foreground absolute -left-3 bottom-[-25px]">
-					0%
-				</h4>
-				<h4>{currentPercentage}</h4>
-				<h4 className="font-medium text-muted-foreground absolute -right-8 bottom-[-25px]">
-					100%
-				</h4>
-			</div>
+							: "#ff1d4b"
+					}
+					strokeWidth="8"
+					fill="none"
+					strokeLinecap="round"
+					strokeDasharray={`${currentPercentage} 100`}
+				/>
+			</svg>
 		</div>
 	);
 };
@@ -174,7 +180,7 @@ const StatisticCard: React.FC<IStatisticCard> = ({
 	const mockDailyPlan: IPlan = {
 		shipments: {
 			plan: 2020,
-			processeed: 1010,
+			processeed: 500,
 		},
 		orders: {
 			plan: 1300,
@@ -189,11 +195,11 @@ const StatisticCard: React.FC<IStatisticCard> = ({
 	const mockWeeklyPlan: IPlan = {
 		shipments: {
 			plan: 5000,
-			processeed: 4800,
+			processeed: 3000,
 		},
 		orders: {
 			plan: 3500,
-			processeed: 3000,
+			processeed: 2200,
 		},
 		requests: {
 			plan: 500,
