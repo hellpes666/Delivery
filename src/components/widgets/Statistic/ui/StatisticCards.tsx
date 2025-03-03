@@ -11,6 +11,7 @@ import {
 import { RootState } from "@/components/app/store/store";
 import { useSelector } from "react-redux";
 import { PlanOptions } from "@/components/app/store/slices/planOptionSlice";
+import { getColorClassByValue } from "@/lib/custom/getColorByValue";
 
 interface IPlan {
 	shipments: {
@@ -23,7 +24,7 @@ interface IPlan {
 		processeed: number;
 	};
 
-	reuests: {
+	requests: {
 		plan: number;
 		processeed: number;
 	};
@@ -53,10 +54,48 @@ const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
 	const [currentPlan, setCurrentPlan] = useState<IPlan>(
 		matchingTable[planOptionSelector]
 	);
+	const [currentPercentage, setCurrentPercentage] = useState(0);
 
 	useEffect(() => {
 		if (planOptionSelector) {
-			setCurrentPlan(matchingTable[planOptionSelector]);
+			const currentTable = matchingTable[planOptionSelector];
+			setCurrentPlan(currentTable);
+
+			const shipmentsPercentage =
+				currentTable.shipments.plan > 0
+					? Math.floor(
+							(currentTable.shipments.processeed /
+								currentTable.shipments.plan) *
+								100
+					  )
+					: 0;
+
+			const ordersPercentage =
+				currentTable.orders.plan > 0
+					? Math.floor(
+							(currentTable.orders.processeed /
+								currentTable.orders.plan) *
+								100
+					  )
+					: 0;
+
+			const requestsPercentage =
+				currentTable.requests.plan > 0
+					? Math.floor(
+							(currentTable.requests.processeed /
+								currentTable.requests.plan) *
+								100
+					  )
+					: 0;
+
+			const totalPercentage = Math.floor(
+				(shipmentsPercentage + ordersPercentage + requestsPercentage) /
+					3
+			);
+
+			setCurrentPercentage(totalPercentage);
+
+			setCurrentPercentage(totalPercentage);
 		}
 	}, [planOptionSelector]);
 
@@ -66,9 +105,11 @@ const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
 		dateValue: number;
 	}> = ({ title, planValue, dateValue }) => {
 		return (
-			<div className="flex flex-col gap-0.5 items-start">
-				<h4 className="text-muted/80 text-md font-medium">{title}</h4>
-				<p className="text-lg font-bold text-primary">
+			<div className="flex flex-col gap-0.5 items-center xl:items-start text-center xl:text-start">
+				<h4 className="text-muted/80 text-sm xl:text-md font-medium">
+					{title}
+				</h4>
+				<p className="text-[12px] xl:text-lg font-bold text-primary">
 					{dateValue}
 					<span className="text-muted/80 font-medium">
 						/{planValue}
@@ -78,9 +119,11 @@ const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
 		);
 	};
 
+	const mainColor = getColorClassByValue(currentPercentage);
+
 	return (
-		<div className="flex justify-between items-center h-full border-t-1 border-muted-foreground/25">
-			<div className="flex flex-col items-start justify-between h-full mt-5">
+		<div className="flex flex-col justify-between items-center h-full border-t-1 border-muted-foreground/25 xl:flex-row">
+			<div className="flex flex-row xl:flex-col items-center justify-between mt-2 xl:h-full xl:mt-5 xl:items-start">
 				<PlanInfo
 					title="Shipments processed"
 					planValue={currentPlan.shipments.plan}
@@ -93,9 +136,28 @@ const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
 				/>
 				<PlanInfo
 					title="Requests considered"
-					planValue={currentPlan.reuests.plan}
-					dateValue={currentPlan.reuests.processeed}
+					planValue={currentPlan.requests.plan}
+					dateValue={currentPlan.requests.processeed}
 				/>
+			</div>
+			<div
+				className="w-full bg-transparent max-w-[60%] xl:max-w-[40%] h-[50%] rounded-t-full border-12 border-b-0 border-muted-foreground/30 mx-auto relative z-0"
+				style={{
+					borderColor:
+						mainColor === "red-700"
+							? "#00A550"
+							: mainColor === "orange-700"
+							? "#F3A505"
+							: "#ff1d4b",
+				}}
+			>
+				<h4 className="font-medium text-muted-foreground absolute -left-3 bottom-[-25px]">
+					0%
+				</h4>
+				<h4>{currentPercentage}</h4>
+				<h4 className="font-medium text-muted-foreground absolute -right-8 bottom-[-25px]">
+					100%
+				</h4>
 			</div>
 		</div>
 	);
@@ -111,16 +173,16 @@ const StatisticCard: React.FC<IStatisticCard> = ({
 }) => {
 	const mockDailyPlan: IPlan = {
 		shipments: {
-			plan: 1010,
-			processeed: 2020,
+			plan: 2020,
+			processeed: 1010,
 		},
 		orders: {
-			plan: 650,
-			processeed: 1300,
+			plan: 1300,
+			processeed: 650,
 		},
-		reuests: {
-			plan: 10,
-			processeed: 20,
+		requests: {
+			plan: 20,
+			processeed: 10,
 		},
 	};
 
@@ -133,7 +195,7 @@ const StatisticCard: React.FC<IStatisticCard> = ({
 			plan: 3500,
 			processeed: 3000,
 		},
-		reuests: {
+		requests: {
 			plan: 500,
 			processeed: 450,
 		},
@@ -148,7 +210,7 @@ const StatisticCard: React.FC<IStatisticCard> = ({
 			plan: 8000,
 			processeed: 7000,
 		},
-		reuests: {
+		requests: {
 			plan: 2000,
 			processeed: 1800,
 		},

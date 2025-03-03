@@ -90,9 +90,9 @@ const StatisticHeader: React.FC<Omit<IStatisticCard, "className">> = ({
 					<div
 						ref={panelRef}
 						className={cn(
-							"absolute bg-card w-[150px] h-[150px] top-8 right-0 rounded-2xl transition-all duration-300 ease-in-out flex flex-col justify-between items-center p-4",
+							"absolute bg-card w-[150px] h-[150px] top-8 right-0 rounded-2xl transition-all duration-300 ease-in-out flex flex-col justify-between items-center p-4 z-10",
 							openPlanOptions
-								? "opacity-100 transform translate-x-0  "
+								? "opacity-95 transform translate-x-0  "
 								: "opacity-0 transform translate-x-4"
 						)}
 					>
@@ -108,7 +108,10 @@ const StatisticHeader: React.FC<Omit<IStatisticCard, "className">> = ({
 										? " border-primary "
 										: ""
 								)}
-								onClick={() => dispatch(setOption(option))}
+								onClick={() => {
+									if (openPlanOptions)
+										dispatch(setOption(option));
+								}}
 							>
 								{option}
 							</h4>
