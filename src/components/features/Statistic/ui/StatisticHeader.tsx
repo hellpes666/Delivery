@@ -49,8 +49,17 @@ const StatisticHeader: React.FC<Omit<IStatisticCard, "className">> = ({
 		};
 	}, []);
 	return (
-		<header className="flex justify-between items-end w-full">
-			<h2 className="text-card font-bold tracking-wider text-2xl flex items-end gap-3">
+		<header
+			className={cn(
+				"flex justify-between items-end w-full",
+				typeOfWidget === "Daily plan" && "items-center"
+			)}
+		>
+			<h2
+				className={cn(
+					"text-card font-bold tracking-wider text-2xl flex items-start flex-col gap-3"
+				)}
+			>
 				{typeOfWidget !== "Daily plan" ? (
 					title
 				) : (
