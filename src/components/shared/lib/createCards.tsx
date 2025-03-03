@@ -10,17 +10,14 @@ export const createCard = (title: string, info: number): IInfoCard => ({
 	className: "shadow-xl",
 });
 
-
 export const createHugeCards = (
-		title: WidgetType,
-		typeOfWidget: WidgetType,
-		link?: string,
-		currentDate?: string,
-		options?: PlanOptions[]
-	) => ({
-		title,
-		typeOfWidget,
-		link: link === "" ? undefined : link,
-		currentDate,
-		options,
-	});
+	title: WidgetType,
+	typeOfWidget: WidgetType,
+	link?: string,
+	options?: PlanOptions[]
+) => ({
+	title,
+	typeOfWidget,
+	link: link === "" ? undefined : link,
+	options,
+});

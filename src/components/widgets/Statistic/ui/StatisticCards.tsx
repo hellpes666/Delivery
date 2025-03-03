@@ -102,7 +102,7 @@ const StatisticCard: React.FC<IStatisticCard> = ({
 				]}
 			/>
 		),
-		"Availbe trucks": (
+		"Available trucks": (
 			<StatisticAvaibleTrucks
 				destination={[
 					"Valencia - Barcelona",

@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { useDispatch, useSelector } from "react-redux";
 import { setOption } from "@/components/app/store/slices/planOptionSlice";
 import { RootState } from "@/components/app/store/store";
+import { getFormattedDateForPlan } from "@/components/shared/constants/cards";
 
 const StatisticHeader: React.FC<Omit<IStatisticCard, "className">> = ({
 	title,
@@ -16,10 +17,21 @@ const StatisticHeader: React.FC<Omit<IStatisticCard, "className">> = ({
 }) => {
 	const [openPlanOptions, setOpenPlanOptions] = useState(false);
 	const panelRef = useRef<HTMLDivElement | null>(null);
+	const [formattedDate, setFormattedDate] = useState("");
 	const dispatch = useDispatch();
 	const planOptionSelector = useSelector(
 		(state: RootState) => state.planOption
 	);
+
+	useEffect(() => {
+		if (planOptionSelector.option) {
+			const newFormattedDate = getFormattedDateForPlan(
+				planOptionSelector.option
+			);
+			setFormattedDate(newFormattedDate);
+		}
+	}, [planOptionSelector.option]);
+
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
 			if (
@@ -39,7 +51,16 @@ const StatisticHeader: React.FC<Omit<IStatisticCard, "className">> = ({
 	return (
 		<header className="flex justify-between items-end w-full">
 			<h2 className="text-card font-bold tracking-wider text-2xl flex items-end gap-3">
-				{title}
+				{typeOfWidget !== "Daily plan" ? (
+					title
+				) : (
+					<>
+						{planOptionSelector.option}
+						<p className="text-muted/80 font-normal tracking-wide text-sm flex items-center gap-3">
+							{formattedDate}{" "}
+						</p>
+					</>
+				)}
 				{currentDate && (
 					<p className="text-muted/80 font-normal tracking-wide text-sm flex items-center gap-3">
 						{currentDate}
