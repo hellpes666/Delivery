@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import themeSlice from "./slices/themeSlice";
+import optionSlice from "./slices/planOptionSlice";
 
 export const store = configureStore({
 	reducer: {
 		theme: themeSlice,
+		planOption: optionSlice,
 	},
 });
 

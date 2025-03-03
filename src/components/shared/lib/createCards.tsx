@@ -1,3 +1,4 @@
+import { PlanOptions } from "@/components/app/store/slices/planOptionSlice";
 import { IInfoCard } from "@/components/widgets/InfoCard/ui/InfoCard";
 import { WidgetType } from "@/components/widgets/Statistic/model/widgetType";
 import { LuPackageSearch } from "react-icons/lu";
@@ -15,7 +16,7 @@ export const createHugeCards = (
 		typeOfWidget: WidgetType,
 		link?: string,
 		currentDate?: string,
-		options?: string[]
+		options?: PlanOptions[]
 	) => ({
 		title,
 		typeOfWidget,

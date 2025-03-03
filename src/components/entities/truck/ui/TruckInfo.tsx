@@ -12,7 +12,7 @@ const TruckInfo: React.FC<ITruckInfo> = ({ destination, truck, workload }) => {
 		<div className="flex justify-between py-2 pr-3  border-accent/70 border-b-2 ">
 			<div className="flex flex-col items-start">
 				<h3 className="font-bold text-primary text-xl">{truck}</h3>
-				<p className="text-muted-foreground text-[12px]">
+				<p className="text-muted-foreground text-[14px]">
 					{destination}
 				</p>
 			</div>

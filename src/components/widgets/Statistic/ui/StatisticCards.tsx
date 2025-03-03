@@ -9,6 +9,54 @@ import {
 	StatisticDelayedDelivery,
 } from "@/components/features/Statistic/ui";
 
+// interface IPlan {
+// 	shipmentsPlan: number;
+// 	shipmentsProcesseed: number;
+
+// 	ordersPlan: number;
+// 	ordersProcessed: number;
+
+// 	reuestsConsidered: number;
+// 	reuestsPlan: number;
+// }
+
+// interface IStatisticTimePlan {
+// 	dailyPlan: IPlan;
+// 	weeklyPlan: IPlan;
+// 	monhtlyPlan: IPlan;
+// }
+
+// const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
+// 	dailyPlan,
+// 	weeklyPlan,
+// 	monhtlyPlan,
+// }) => {
+
+// 	const PlanInfo: React.FC<{
+// 		title: string;
+// 		planValue: number;
+// 		dateValue: number;
+// 	}> = ({ title, planValue, dateValue }) => {
+// 		return (
+// 			<>
+// 				<h4 className="text-muted/80 text-md">{title}</h4>
+// 				<p className="font-bold text-primary">
+// 					{dateValue}
+// 					<span className="text-muted/80 font-normal">
+// 						{planValue}
+// 					</span>
+// 				</p>
+// 			</>
+// 		);
+// 	};
+
+// 	return (
+// 		<div className="flex justify-between items-center">
+// 			<div className="flex flex-col items-start gap-2"></div>
+// 		</div>
+// 	);
+// };
+
 const StatisticCard: React.FC<IStatisticCard> = ({
 	title,
 	currentDate,

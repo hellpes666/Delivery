@@ -68,7 +68,7 @@ const PageHeader = () => {
 				label="Departament"
 			/>
 
-			<div className="rounded-2xl border border-input bg-transparent px-3 py-1 shadow-sm w-fit text-nowrap hover:border-ring font-bold text-[10px] flex items-center justify-center">
+			<div className="rounded-2xl border border-input bg-transparent px-3 py-1 shadow-sm w-fit text-nowrap hover:border-ring font-bold text-[14px] flex items-center justify-center">
 				{formatDate(currentDate, {
 					weekday: "short",
 					day: "2-digit",
