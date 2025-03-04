@@ -1,13 +1,13 @@
 import TruckInfo from "@/components/entities/truck/ui/TruckInfo";
 import { IStatisticAvaibleTrucks } from "../../../entities/truck/model/avaibleTrucks";
+import { createEmptyArrayWithArgLength } from "@/components/shared/lib/createEmptyArrayWithArgLength";
 
 const StatisticAvaibleTrucks: React.FC<IStatisticAvaibleTrucks> = ({
 	destination,
 	truck,
 	workload,
 }) => {
-	const length = destination.length;
-	const ARR = Array.from({ length }, (_, index) => index);
+	const ARR = createEmptyArrayWithArgLength(destination);
 
 	return (
 		<div className="overflow-auto">

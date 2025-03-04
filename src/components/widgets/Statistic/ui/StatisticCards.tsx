@@ -5,6 +5,7 @@ import { JSX, useEffect, useState } from "react";
 import { WidgetType } from "../model/widgetType";
 import { Layout } from "@/components/app";
 import {
+	RecentRequests,
 	StatisticAvaibleTrucks,
 	StatisticDelayedDelivery,
 } from "@/components/features/Statistic/ui";
@@ -123,7 +124,7 @@ const StatisticTimePlan: React.FC<IStatisticTimePlan> = ({
 
 	return (
 		<div className="flex flex-col justify-between items-center h-full border-t-1 border-muted-foreground/25 xl:flex-row">
-			<div className="flex flex-row xl:flex-col items-center justify-between mt-2 xl:h-full xl:mt-5 xl:items-start">
+			<div className="flex flex-row xl:flex-col items-center justify-around mt-2 xl:h-full xl:mt-5 xl:items-start">
 				<PlanInfo
 					title="Shipments processed"
 					planValue={currentPlan.shipments.plan}
@@ -308,6 +309,34 @@ const StatisticCard: React.FC<IStatisticCard> = ({
 				dailyPlan={mockDailyPlan}
 				weeklyPlan={mockWeeklyPlan}
 				monhtlyPlan={mockMonthlyPlan}
+			/>
+		),
+		"Recent requests": (
+			<RecentRequests
+				request={[
+					"Parcel redirection",
+					"Packing problem",
+					"Machine breakdown",
+					"Parcel redirection",
+					"Packing problem",
+					"Machine breakdown",
+				]}
+				destination={[
+					"Valencia - Barcelona",
+					"Cordoba - Barcelona",
+					"Seville - Barcelona",
+					"Valencia - Barcelona",
+					"Cordoba - Barcelona",
+					"Seville - Barcelona",
+				]}
+				requestDate={[
+					new Date(new Date().getTime() - 60000), // 1 minute ago
+					new Date(new Date().getTime() - 600000), // 10 minutes ago
+					new Date(new Date().getTime() - 1200000), // 20 minutes ago
+					new Date(new Date().getTime() - 1200000 * 2), // 40 minute ago
+					new Date(new Date().getTime() - 1200000 * 4), // 80 minutes ago
+					new Date(new Date().getTime() - 1200000 * 8), // 159 minutes ago
+				]}
 			/>
 		),
 	};

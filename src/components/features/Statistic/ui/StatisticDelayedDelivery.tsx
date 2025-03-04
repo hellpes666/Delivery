@@ -9,6 +9,7 @@ import {
 import { DefineColor } from "@/lib/custom/defineColor";
 import { IStatisticDelayedDelivery } from "../../../entities/truck/model/delayedDelivery";
 import { v4 as uuidv4 } from "uuid";
+import { createEmptyArrayWithArgLength } from "@/components/shared/lib/createEmptyArrayWithArgLength";
 
 const StatisticDelayedDelivery: React.FC<IStatisticDelayedDelivery> = ({
 	destination,
@@ -16,8 +17,7 @@ const StatisticDelayedDelivery: React.FC<IStatisticDelayedDelivery> = ({
 	timeArrive,
 	timeDelay,
 }) => {
-	const length = destination.length;
-	const arr = Array.from({ length }, (_, index) => index);
+	const ARR = createEmptyArrayWithArgLength(destination);
 
 	return (
 		<Table>
@@ -38,7 +38,7 @@ const StatisticDelayedDelivery: React.FC<IStatisticDelayedDelivery> = ({
 				</TableRow>
 			</TableHeader>
 			<TableBody>
-				{arr.map((i) => (
+				{ARR.map((i) => (
 					<TableRow key={uuidv4()}>
 						<TableCell
 							key={uuidv4()}

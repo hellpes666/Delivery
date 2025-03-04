@@ -1,4 +1,5 @@
 import { Layout } from "@/components/app";
+import { Icon } from "@/components/shared/ui";
 import { cn } from "@/lib/utils";
 import { JSX } from "react";
 
@@ -26,9 +27,7 @@ const InfoCard: React.FC<IInfoCard> = ({ title, info, icon, className }) => {
 					{info}
 				</h3>
 			</div>
-			<div className="px-3 py-0.5 bg-input rounded-2xl flex items-center justify-center">
-				{icon}
-			</div>
+			<Icon icon={icon} />
 		</Layout>
 	);
 };

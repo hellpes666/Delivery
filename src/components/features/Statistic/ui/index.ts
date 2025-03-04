@@ -1,5 +1,11 @@
+import RecentRequests from "./RecentRequests";
 import StatisticAvaibleTrucks from "./StatisticAvaibleTrucks";
 import StatisticDelayedDelivery from "./StatisticDelayedDelivery";
 import StatisticHeader from "./StatisticHeader";
 
-export { StatisticHeader, StatisticAvaibleTrucks, StatisticDelayedDelivery };
+export {
+	RecentRequests,
+	StatisticHeader,
+	StatisticAvaibleTrucks,
+	StatisticDelayedDelivery,
+};

@@ -1,3 +1,4 @@
+import { InfoRow } from "@/components/shared/ui";
 import { getColorClassByValue } from "@/lib/custom/getColorByValue";
 import { cn } from "@/lib/utils";
 
@@ -9,14 +10,7 @@ interface ITruckInfo {
 const TruckInfo: React.FC<ITruckInfo> = ({ destination, truck, workload }) => {
 	const mainColor = getColorClassByValue(workload);
 	return (
-		<div className="flex justify-between py-2 pr-3  border-accent/70 border-b-2 ">
-			<div className="flex flex-col items-start">
-				<h3 className="font-bold text-primary text-xl">{truck}</h3>
-				<p className="text-muted-foreground text-[14px]">
-					{destination}
-				</p>
-			</div>
-
+		<InfoRow title={truck} subtitle={destination}>
 			<div className="flex flex-col items-end gap-2">
 				<h3
 					className={cn(`text-${mainColor} font-medium`)}
@@ -56,7 +50,7 @@ const TruckInfo: React.FC<ITruckInfo> = ({ destination, truck, workload }) => {
 					/>
 				</div>
 			</div>
-		</div>
+		</InfoRow>
 	);
 };
 
