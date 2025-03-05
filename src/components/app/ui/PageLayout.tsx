@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { Aside, Layout, PageHeader } from ".";
 import { useSelector } from "react-redux";
-import { RootState } from "./store/store";
+import { RootState } from "../store/store";
 import { cn } from "@/lib/utils";
 
 interface IPageLayout {

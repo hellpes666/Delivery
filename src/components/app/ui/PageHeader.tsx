@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDebounce } from "../shared/hooks/debounced";
-import { Selector } from "../shared/ui";
-import { formatDate } from "../shared/lib/formatDate";
+import { useDebounce } from "../../shared/hooks/debounced";
+import { Selector } from "../../shared/ui";
+import { formatDate } from "../../shared/lib/formatDate";
 
 const MaskedInput = () => {
 	const [inputValue, setInputValue] = useState("");

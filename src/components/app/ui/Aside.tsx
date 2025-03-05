@@ -17,10 +17,10 @@ import {
 	CiDark,
 } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa6";
-import { ROUTES_2 } from "./routes-2";
+import { ROUTES_2 } from "../routes-2";
 import { useDispatch, useSelector } from "react-redux";
-import { setTheme } from "./store/slices/themeSlice";
-import { RootState } from "./store/store";
+import { setTheme } from "../store/slices/themeSlice";
+import { RootState } from "../store/store";
 interface IPageLink {
 	icon: ReactNode;
 	title: string;
@@ -126,12 +126,12 @@ const Aside: React.FC<{ className?: string }> = ({ className }) => {
 			size="small"
 			className={cn(
 				"bg-[var(--foreground)] flex flex-col",
-				"fixed md:sticky h-screen w-full md:w-[320px]", 
+				"fixed md:sticky h-screen w-full md:w-[320px]",
 				"top-0 left-[-100%] md:left-0",
 				"transform transition-transform duration-300 ease-in-out",
 				"z-50",
 				className
-			  )}
+			)}
 		>
 			<Link
 				to="/"

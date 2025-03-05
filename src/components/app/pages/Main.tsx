@@ -1,5 +1,5 @@
 import { CARDS, HUGE_CARDS } from "@/components/shared/constants/cards";
-import { PageLayout } from "..";
+import { PageLayout } from "../ui";
 
 import InfoCard from "@/components/widgets/InfoCard/ui/InfoCard";
 
@@ -32,12 +32,3 @@ function Main() {
 }
 
 export default Main;
-
-/*
-
-weekday: "short",
-			day: "2-digit",
-			month: "short",
-			hour: "2-digit",
-			minute: "2-digit",
-			hour12: false,*/

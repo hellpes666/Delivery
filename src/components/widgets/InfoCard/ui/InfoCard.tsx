@@ -1,4 +1,4 @@
-import { Layout } from "@/components/app";
+import { Layout } from "@/components/app/ui";
 import { Icon } from "@/components/shared/ui";
 import { cn } from "@/lib/utils";
 import { JSX } from "react";
